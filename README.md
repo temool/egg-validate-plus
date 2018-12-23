@@ -52,6 +52,61 @@ config.validatePlus = {
     }
   }
 };
+
+```
+### 使用插件
+#### 目录结构
+```bash
+|- MY-PROJECT
+    |- app
+        |- controller
+            |- user.js
+            |- post.js
+        |- rules
+            |- user
+                |- login.js [用户登录参数校验规则]
+            |- post
+                |- add.js [创建 post 参数校验规则]
+    |- config
+        |- config.default.js
+        |- plugin.js
+    |- package.json
+    |- README.md
+```
+#### 规则的传入方式
+##### 1.传入字符串
+```js
+// app/controller/xx.js
+const { query } = this.ctx.request;
+await this.ctx.validate('user.login', query)
+```
+注意：不要带上 rules
+##### 2.直接传入验证规则对象
+```js
+// app/controller/xx.js
+// 直接引入 rules 文件下的验证规则，也可以是自己写的验证规则对象
+const rule = this.app.rules.user.login
+// 数据格式
+// const rule = {
+//   id: [
+//     { required: true },
+//     { type: 'number', message: 'id 必须为数字 }
+//   ],
+//   password: [
+//     { required: true },
+//     { type: 'string', message: 'password 必须为字符串 }
+//   ]
+// }
+
+// 从客户端传入的参数 
+const { query } = this.ctx.request;
+// 数据格式： 
+// query = {
+//   username: 123456,
+//   password: 'abcdefg'
+// }
+
+await this.ctx.validate(rule, query)
 ```
 
 ## 使用场景
@@ -61,7 +116,10 @@ config.validatePlus = {
   - 不能使用自定义错误提示
   - 类型校验兼容性差
   - 非必填校验兼容性差
-
+- 提供哪些更好的体验？
+  - 使用自定义错误提示
+  - 提供更多的类型校验
+  - 兼容更多非必填校验场景
 
 ## 依赖说明
 
@@ -82,8 +140,7 @@ egg-validate-plus 版本 | egg 1.x
 请到 [config/config.default.js](config/config.default.js) 查看详细配置项说明。
 
 ## 提问交流
-欢迎提 PR 和 issues;
-请到 [egg-validate-plus issues](https://github.com/temool/egg-validate-plus/issues) 异步交流。
+欢迎提 [PR](https://github.com/temool/egg-validate-plus/pulls) 和 [issues](https://github.com/temool/egg-validate-plus/issues) 。
 
 ## License
 
