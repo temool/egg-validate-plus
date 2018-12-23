@@ -23,40 +23,67 @@
 <!--
 Description here.
 -->
+## 用法
 
-## Install
-
-```bash
-$ npm i egg-validate-plus --save
-```
-
-## Usage
+### 开启插件
 
 ```js
-// {app_root}/config/plugin.js
+// config/plugin.{env}.js
 exports.validatePlus = {
   enable: true,
   package: 'egg-validate-plus',
 };
 ```
 
-## Configuration
+### 配置插件
 
 ```js
-// {app_root}/config/config.default.js
-exports.validatePlus = {
+// config/config.{env}.js
+config.validatePlus = {
+  resolveError(ctx, errors) {
+    if (errors.length) {
+      ctx.type = 'json';
+      ctx.status = 400;
+      ctx.body = {
+        code: 400,
+        error: errors,
+        message: '参数错误',
+      };
+    }
+  }
 };
 ```
 
-see [config/config.default.js](config/config.default.js) for more detail.
+## 使用场景
 
-## Example
+- 为什么要自己造轮子？
+  其实 egg 官方有一个 [egg-validate](https://github.com/eggjs/egg-validate#readme) 插件，非常的优秀。但是我觉得有几个不满意的地方：
+  - 不能使用自定义错误提示
+  - 类型校验兼容性差
+  - 非必填校验兼容性差
 
-<!-- example here -->
 
-## Questions & Suggestions
+## 依赖说明
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+### 依赖的 egg 版本
+
+egg-validate-plus 版本 | egg 1.x
+--- | ---
+1.x | 😁
+0.x | ❌
+
+### 依赖的插件
+- async-validator
+目前大部分的校验规则插件都使用了 [async-validator](https://github.com/yiminghe/async-validator)，包括前端的表单验证，egg-validate-plus 也不例外，感谢作者 [yiminghe](https://github.com/yiminghe)
+
+
+## 默认配置
+
+请到 [config/config.default.js](config/config.default.js) 查看详细配置项说明。
+
+## 提问交流
+欢迎提 PR 和 issues;
+请到 [egg-validate-plus issues](https://github.com/temool/egg-validate-plus/issues) 异步交流。
 
 ## License
 
