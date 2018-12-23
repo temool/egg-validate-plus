@@ -1,6 +1,6 @@
 {
   "name": "egg-validate-plus",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "egg validate plugin",
   "eggPlugin": {
     "name": "validatePlus"
@@ -39,7 +39,8 @@
   "files": [
     "app.js",
     "agent.js",
-    "config"
+    "config",
+    "extend"
   ],
   "ci": {
     "version": "8, 9"
