@@ -24,22 +24,25 @@ module.exports = {
     }
 
     const validator = new AsyncValidator(descriptor)
-    await validator.validate(query, { firstFields: true }, errors => {
-      if (this.app.config.validatePlus
-        && this.app.config.validatePlus.resolveError
-        && typeof this.app.config.validatePlus.resolveError === 'function') {
-        this.app.config.validatePlus.resolveError(this, errors)
-        throw Error(errors)
-      } else {
-        ctx.type = 'json';
-        ctx.status = 400;
-        this.body = {
-          code: 400,
-          message: '参数错误',
-          error: errors
+    let validateResult = true
+    validator.validate(query, { firstFields: true }, errors => {
+      if (errors) {
+        validateResult = false
+        if (this.app.config.validatePlus
+          && this.app.config.validatePlus.resolveError
+          && typeof this.app.config.validatePlus.resolveError === 'function') {
+          this.app.config.validatePlus.resolveError(this, errors)
+        } else {
+          this.type = 'json';
+          this.status = 400;
+          this.body = {
+            code: 400,
+            message: '参数错误',
+            error: errors
+          }
         }
-        throw Error(errors)
       }
     })
+    return validateResult;
   }
 };

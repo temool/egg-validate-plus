@@ -1,6 +1,6 @@
 {
   "name": "egg-validate-plus",
-  "version": "1.1.2",
+  "version": "1.1.5",
   "description": "egg validate plugin",
   "eggPlugin": {
     "name": "validatePlus"
@@ -40,19 +40,19 @@
     "app.js",
     "agent.js",
     "config",
-    "extend"
+    "app"
   ],
   "ci": {
     "version": "8, 9"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-validate-plus.git"
+    "url": "git+https://github.com/temool/egg-validate-plus.git"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/temool/egg-validate-plus/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-validate-plus#readme",
+  "homepage": "https://github.com/temool/egg-validate-plus#readme",
   "author": "temool",
   "license": "MIT"
 }
