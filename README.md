@@ -78,7 +78,11 @@ config.validatePlus = {
 ```js
 // app/controller/xx.js
 const { query } = this.ctx.request;
-await this.ctx.validate('user.login', query)
+
+// 拿到验证结果
+const validateResult = await this.ctx.validate('user.login', query)
+// 验证不通过时，阻止后面的代码执行
+if (!validateResult) return
 ```
 注意：不要带上 rules
 ##### 2.直接传入验证规则对象
@@ -106,7 +110,10 @@ const { query } = this.ctx.request;
 //   password: 'abcdefg'
 // }
 
-await this.ctx.validate(rule, query)
+// 拿到验证结果
+const validateResult = await this.ctx.validate(rule, query)
+// 验证不通过时，阻止后面的代码执行
+if (!validateResult) return
 ```
 
 ## 使用场景
